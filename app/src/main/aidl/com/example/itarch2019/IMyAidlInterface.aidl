@@ -9,6 +9,6 @@ interface IMyAidlInterface {
      * and return values in AIDL.
      */
     int calc();
-    void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,
-            double aDouble, String aString);
+   // void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,
+    //        double aDouble, String aString);
 }
