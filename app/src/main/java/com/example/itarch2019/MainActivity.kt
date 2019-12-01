@@ -10,13 +10,15 @@ import android.os.IBinder
 import android.os.RemoteException
 import android.util.Log
 import android.widget.Button
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     val TAG = "MainActivity"
-    private var mServiceAidl: IMyAidlInterface? = null
-    private val mAidlConnection = AidlConnection()
     var mBound = false
     var mService: MyService? = null
+    private val mAidlConnection = AidlConnection()
+    private var mServiceAidl: IMyAidlInterface? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,21 +26,24 @@ class MainActivity : AppCompatActivity() {
         val invokeNotificationAIDLEButton = findViewById<Button>(R.id.button)
         invokeNotificationAIDLEButton.setOnClickListener {
             val _mServiceAidl = mServiceAidl
-            var ret = 1
-            try {
-                ret = _mServiceAidl!!.calc()
-            } catch (e: RemoteException) {
-                e.printStackTrace()
+            if(editText.text != null){
+                // 取得したテキストを TextView に張り付ける
+                var ret = ""
+                try {
+                    ret = _mServiceAidl!!.getModel(editText.text.toString())
+                } catch (e: RemoteException) {
+                    e.printStackTrace()
+                }
+                textView.text = ret
+                Log.d(TAG, "#### Received : " + ret);
             }
-            val _ret = ret
-            Log.d(TAG, "#### Received : " + _ret);
+
         }
     }
 
     override fun onStart() {
         super.onStart()
-        val intentAidl = Intent()
-            .setComponent(ComponentName("com.example.itarch2019", "com.example.itarch2019.MyService"))
+        val intentAidl = Intent().setComponent(ComponentName("com.example.itarch2019", "com.example.itarch2019.MyService"))
         val bindAidl = bindService(Intent(this, MyService::class.java), AidlConnection(), Context.BIND_AUTO_CREATE)
         Log.d(TAG, "Bind Aidl Connection "+ bindAidl)
     }
