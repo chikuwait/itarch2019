@@ -22,19 +22,22 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val invokeNotificationAIDLEButton = findViewById<Button>(R.id.button)
-        invokeNotificationAIDLEButton.setOnClickListener {
+        val button = findViewById<Button>(R.id.button)
+        button.setOnClickListener {
             val _mServiceAidl = mServiceAidl
             if(editText.text != null){
                 // 取得したテキストを TextView に張り付ける
-                var ret = ""
+                var retModel = ""
+                var retOperation = ""
                 try {
-                    ret = _mServiceAidl!!.getModel(editText.text.toString())
+                    retModel = _mServiceAidl!!.getModel(editText.text.toString())
+                    retOperation = _mServiceAidl!!.getOperation(editText.text.toString())
                 } catch (e: RemoteException) {
                     e.printStackTrace()
                 }
-                textView.text = ret
-                Log.d(TAG, "#### Received : " + ret);
+                textView.text = retModel
+                textView4.text = retOperation
+          //      Log.d(TAG, "#### Received : " + ret);
             }
 
         }
