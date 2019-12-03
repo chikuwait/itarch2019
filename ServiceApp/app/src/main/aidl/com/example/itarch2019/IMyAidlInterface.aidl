@@ -9,6 +9,7 @@ interface IMyAidlInterface {
      * and return values in AIDL.
      */
     String getModel(String aircraft_number);
+    String getOperation(String aircraft_number);
    // void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,
     //        double aDouble, String aString);
 }

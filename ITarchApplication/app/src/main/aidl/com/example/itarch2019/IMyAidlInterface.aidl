@@ -5,6 +5,8 @@ package com.example.itarch2019;
 
 interface IMyAidlInterface {
     String getModel(String aircraft_number);
+    String getOperation(String aircraft_number);
+
 }
 
 
